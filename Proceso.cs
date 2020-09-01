@@ -1,11 +1,110 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Reflection;
+using System.IO;
+using System.Security.Permissions;
 
 namespace DPRN1_U3_A3_PIVM
 {
     class Proceso
     {
+        Menu menu = new Menu();
+
+        private List<Solicitante> listaSolicitante;
+        private Dato dato;
+        private Solicitante solicitante;
+
+
+        public void SolicitarOpciones()
+        {
+            listaSolicitante = new List<Solicitante>();
+
+            int Opcion;
+            String _distancia;
+            String destino;
+
+            dato = new Dato("Solicitante.bd");
+
+            do
+            {
+                do
+                {
+                    if (File.Exists("Empleado.bd"))
+                    {
+                        listaSolicitante = dato.deserializar();
+                        Console.WriteLine("\n1. hay empleados previamente registrados ");
+                    }
+
+                    Console.WriteLine("\n1. Registrar Empleado");
+                    Console.WriteLine("2. Mostrar listado de Empleado");
+                    Console.WriteLine("3. Modificar Datos del Empleado");
+                    Console.WriteLine("4. Mostrar Informacion Basica del Empleado");
+                    Console.WriteLine("5. Mostrar Informacion Completa del Empleado");
+                    Console.WriteLine("6. Salir");
+                    Console.WriteLine("\nSeria tan amable de Seleccionar una opcion");
+                    Opcion = int.Parse(Console.ReadLine());
+                    Console.Clear();
+
+                    if (Opcion < 1 || Opcion > 6)
+                    {
+                        Console.WriteLine("Ingrese una opción válida [1-6]");
+                    }
+
+                } while (Opcion < 1 || Opcion > 6);
+
+                switch (Opcion)
+                {
+                    case 1:
+                        // => Registrar Empleado
+                        RegistrarSolicitante();
+                        Console.Clear();
+                        menu.menu();
+                        SolicitarOpciones();
+                        break;
+
+                    case 2:
+                        // => // => Mostrar Informacion Basica del Empleado
+
+                        Console.Clear();
+                        menu.menu();
+                        ListarSolicitante();
+                        Console.Clear();
+                        menu.menu();
+
+                        break;
+
+                    case 3:
+                        // = Modificar Datos del Empleado
+
+                        ModificarDatosSolicitante();
+                        break;
+                    case 4:
+                        // => Mostrar Informacion Basica del Empleado
+                        MostrarInformacionBasica();
+                        Console.Clear();
+                        menu.menu();
+                        SolicitarOpciones();
+                        break;
+                    case 5:
+                        // => Mostrar Informacion Completa del Empleado
+                        MostrarInformacionCompleta();
+                        Console.Clear();
+                        menu.menu();
+                        SolicitarOpciones();
+                        break;
+
+                    case 6:
+                        // => Exit
+                        Console.WriteLine("\nGracias por utilizar nuestros servicios\n");
+                        Environment.Exit(0);
+                        break;
+
+                }
+
+            } while (Opcion != 6);
+        }
         // * CALCULO DE COSTO
         Tipo Turista - $3,200 pesos para menores de 15 años - $320 pesos
         Se puede otorgar 1 mes o 10 años
