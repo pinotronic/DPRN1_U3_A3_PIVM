@@ -8,6 +8,9 @@ namespace DPRN1_U3_A3_PIVM
         {
             Menu menu = new Menu();
             menu.menu();
+        Proceso solicitar = new Proceso();
+            solicitar.SolicitarOpciones();
         }
+
     }
 }
